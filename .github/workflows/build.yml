@@ -1,0 +1,42 @@
+# Файл конфигурации рабочего процесса для GitHub Actions
+
+# Определяем условия запуска сборки
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Скачиваем исходники
+      - uses: actions/checkout@v2
+
+      # Устанавливаем необходимые инструменты
+      - name: Установка Qt 6.7
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: 6.7.0
+          arch: x86_64
+          modules: qtbase
+
+      - name: Установка MinGW
+        run: |
+          choco install mingw
+          echo "C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin" >> $env:GITHUB_PATH
+
+      # Сборка приложения
+      - name: Сборка приложения
+        run: |
+          qmake
+          mingw32-make
+
+      # Публикация результатов сборки
+      - name: Публикация результатов сборки
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/${{ matrix.artifact_name }}
+          asset_name: ${{ matrix.asset_name }}
+          tag: ${{ github.ref }}
