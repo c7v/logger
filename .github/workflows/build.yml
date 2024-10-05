@@ -3,7 +3,7 @@
 # Определяем условия запуска сборки
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build:
