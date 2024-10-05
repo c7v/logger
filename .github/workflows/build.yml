@@ -24,7 +24,9 @@ jobs:
         run: |
           choco install mingw
           echo "C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin" >> $env:GITHUB_PATH
-
+      - name: Настройка переменных среды
+        run: |
+          echo "PATH=$PATH:$HOME/.local/bin" >> $GITHUB_ENV
       # Сборка приложения
       - name: Сборка приложения
         run: qmake
