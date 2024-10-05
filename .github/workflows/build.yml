@@ -15,7 +15,7 @@ jobs:
 
       # Устанавливаем необходимые инструменты
       - name: Установка Qt 6.7
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v4
         with:
           version: 6.7.0
           arch: x86_64
