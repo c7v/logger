@@ -18,6 +18,8 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: 6.7.0
+          arch: "win64_msvc2019_64"
+          modules: qtbase
 
       - name: Установка MinGW
         run: |
